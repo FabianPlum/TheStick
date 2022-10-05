@@ -1,3 +1,11 @@
+#!/usr/bin/env python3
+
+"""
+The code is the same as for Tiny Yolo V3 and V4, the only difference is the blob file
+- Tiny YOLOv3: https://github.com/david8862/keras-YOLOv3-model-set
+- Tiny YOLOv4: https://github.com/TNTWEN/OpenVINO-YOLOV4
+"""
+
 from pathlib import Path
 import sys
 import cv2
@@ -6,20 +14,20 @@ import numpy as np
 import time
 import blobconverter
 
-nnPath = blobconverter.from_openvino(xml="I:/THE_STICK/stick_tiny_YOLO_v4/yolov4_tiny_sticks.xml",
-                                     bin="I:/THE_STICK/stick_tiny_YOLO_v4/yolov4_tiny_sticks.bin",
+# Get argument first
+nnPath = blobconverter.from_openvino(xml="ant_tiny_YOLO_v4/yolov4_tiny_ants.xml",
+                                     bin="ant_tiny_YOLO_v4/yolov4_tiny_ants.bin",
                                      data_type="FP16",
                                      shaves=6,
                                      version="2021.3",
                                      use_cache=True)
-
 
 if not Path(nnPath).exists():
     import sys
     raise FileNotFoundError(f'Required file/s not found, please run "{sys.executable} install_requirements.py"')
 
 
-labelMap = ["stick insect"]
+labelMap = ["ant"]
 
 syncNN = False
 
@@ -36,23 +44,18 @@ xoutRgb.setStreamName("rgb")
 nnOut.setStreamName("nn")
 
 # Properties
-#camRgb.setPreviewSize(320, 320)
-camRgb.setPreviewSize(416, 416)
+camRgb.setPreviewSize(320, 320)
 camRgb.setResolution(dai.ColorCameraProperties.SensorResolution.THE_1080_P)
 camRgb.setInterleaved(False)
 camRgb.setColorOrder(dai.ColorCameraProperties.ColorOrder.BGR)
-camRgb.setFps(60)
+camRgb.setFps(50)
 
 # Network specific settings
-detectionNetwork.setConfidenceThreshold(0.62)
+detectionNetwork.setConfidenceThreshold(0.5)
 detectionNetwork.setNumClasses(1)
 detectionNetwork.setCoordinateSize(4)
 detectionNetwork.setAnchors([10, 14, 23, 27, 37, 58, 81, 82, 135, 169, 344, 319])
-
-# for 320 x 320
-# detectionNetwork.setAnchorMasks({"side20": [1, 2, 3], "side10": [3, 4, 5]})
-# 416 x 416
-detectionNetwork.setAnchorMasks({"side26": [1, 2, 3], "side13": [3, 4, 5]})
+detectionNetwork.setAnchorMasks({"side20": [1, 2, 3], "side10": [3, 4, 5]})
 detectionNetwork.setIouThreshold(0.5)
 detectionNetwork.setBlobPath(nnPath)
 detectionNetwork.setNumInferenceThreads(2)
