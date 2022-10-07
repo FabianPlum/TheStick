@@ -121,7 +121,7 @@ with depthai.Device(pipeline) as device:
                                        detection.xmax,
                                        detection.ymax))
                 centres.append([[(bbox[0] + bbox[2]) / 2],
-                                [(bbox[1] + bbox[3] / 2)]])
+                                [(bbox[1] + bbox[3]) / 2]])
                 bounding_boxes.append([bbox[0],
                                        bbox[2],
                                        bbox[1],
