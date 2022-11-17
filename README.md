@@ -50,3 +50,10 @@ alternatively, you can pre-compile the blob file online
 https://blobconverter.luxonis.com/
 
 Select OpenVINO 2021.3 > OpenVINO Model > Continue, upload .xml and .bin, and convert.
+
+## Download trained networks and config files here:
+
+**[YOLO](https://github.com/AlexeyAB/darknet) Networks**
+
+* [tiny-yolov4 - single class ant detector (trained on synthetic data)](https://drive.google.com/drive/folders/1MS-gLpiWfPuGOIwQKvsqZsDFK29vZe9C?usp=share_link)
+* [tiny-yolov4 - single class stick insect detector (trained on synthetic data)](https://drive.google.com/drive/folders/1WxRES6dMZblyQkBPMn8ZSmjOM_FNAdUY?usp=share_link)
