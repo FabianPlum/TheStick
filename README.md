@@ -47,9 +47,9 @@ python yolo2openvino\convert_weights_pb.py --yolo 4 --class_names ant_tiny_YOLO_
 ```
 
 3. Now, to run the tf -> OpenVINO conversion, configure the json file to match the number of classes (see yolo2openvino notes for details).
-run the following command from ```...\anaconda3\envs\depthai\Lib\site-packages\mo.py```
+Adjust the absolute filepath to match your conda installation folder.
 ```bash
-python python C:\Users\Legos\anaconda3\envs\depthai\Lib\site-packages\mo.py --input_model .\ant_tiny_YOLO_v4\yolo4tiny416.pb --tensorflow_use_custom_operations_config .\yolo2openvino\json\yolo_v4_tiny_ants.json --batch 1 --data_type FP16 --reverse_input_channel --model_name yolov4_tiny_ants_416 --output_dir .\ant_tiny_YOLO_v4
+python C:\Users\YOUR_USERNAME\anaconda3\envs\depthai\Lib\site-packages\mo.py --input_model .\ant_tiny_YOLO_v4\yolo4tiny416.pb --tensorflow_use_custom_operations_config .\yolo2openvino\json\yolo_v4_tiny_ants.json --batch 1 --data_type FP16 --reverse_input_channel --model_name yolov4_tiny_ants_416 --output_dir .\ant_tiny_YOLO_v4
 ```
 
 4. Add the following lines to final depthai pipeline setup to convert the model at run time (setting use_cashe=True  means the next time the model is run, the already compiled version is executed, so we don't need to re-compile upon every execution)
