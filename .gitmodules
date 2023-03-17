@@ -1,0 +1,3 @@
+[submodule "yolo2openvino"]
+	path = yolo2openvino
+	url = https://github.com/luxonis/yolo2openvino
