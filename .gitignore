@@ -1,0 +1,4 @@
+# python environment specific
+*.pyc
+.idea/*
+__pycache__/*
