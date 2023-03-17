@@ -1,6 +1,17 @@
 # TheStick
 Real-time-hand-held-ant-detection-and-tracking-using-opencv-cameras-in-the-field-the-movie-TM
 
+___
+
+**Attention**
+When using this repo with your own custom weights which you still need to convert for use with the Oak-(D) cameras, make sure to run
+
+```bash
+git clone --recursive
+```
+
+to include the [yolo2openvino](https://github.com/luxonis/yolo2openvino) submodule!
+
 ## OAK-D Environment Setup and example Execution
 
 depthai environment for all actual inference things and the initial darknet -> tf conversion
