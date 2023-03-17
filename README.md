@@ -19,19 +19,37 @@ pip install openvino-dev[tensorflow]==2021.3
 pip install Pillow
 ```
 
-In case things f*ck up, just run the following and please don't ask why.
+## Using our pre-trained models to run Oak-D demo tracking
+
+To use our pre-trained demo models for ants and stick insects, you just need to run the following commands:
+
+```bash
+conda activate depthai
+
+# to use a different model, open the file and change nnPath
+python THE_STICK_YOLO.py
+```
+
+If you need to change the network input resolution (416 x 416 by default), you will need to repeat the conversion
+process outlined below.
+
+___
+## Converting Models from darknet to OpenVINO Oak-D
+
+1. In case things don't work as expected, just run the following and please don't ask why.
 ```bash
 pip install protobuf==3.20.*
 ```
 
 2. conversion from a tiny yolov4 model
 ```bash
-python convert_weights_pb.py --yolo 4 --class_names I:\THE_STICK\ant_tiny_YOLO_v4\obj.names --output_name yolov4_tiny_ants.pb --weights_file I:\THE_STICK\ant_tiny_YOLO_v4\yolov4_tiny_ants.weights --size 416 --tiny
+python yolo2openvino\convert_weights_pb.py --yolo 4 --class_names ant_tiny_YOLO_v4\obj.names --output .\ant_tiny_YOLO_v4\yolo4tiny416.pb --tiny -h 416 -w 416 -a 10,14,23,27,37,58,81,82,135,169,344,319 --weights_file .\ant_tiny_YOLO_v4\yolov4_tiny_ants.weights
 ```
 
-3. Now, to run the tf -> OpenVINO conversion, configure the json file to match the number of classes (see yolo2openvino notes for details) and run
+3. Now, to run the tf -> OpenVINO conversion, configure the json file to match the number of classes (see yolo2openvino notes for details).
+run the following command from ```...\anaconda3\envs\depthai\Lib\site-packages\mo.py```
 ```bash
-mo --input_model .\yolov4_tiny_ants_TF.pb --tensorflow_use_custom_operations_config .\json\yolo_v4_tiny_ants.json --batch 1 --data_type FP16 --reverse_input_channel --model_name yolov4_tiny_ants --output_dir I:\THE_STICK
+python python C:\Users\Legos\anaconda3\envs\depthai\Lib\site-packages\mo.py --input_model .\ant_tiny_YOLO_v4\yolo4tiny416.pb --tensorflow_use_custom_operations_config .\yolo2openvino\json\yolo_v4_tiny_ants.json --batch 1 --data_type FP16 --reverse_input_channel --model_name yolov4_tiny_ants_416 --output_dir .\ant_tiny_YOLO_v4
 ```
 
 4. Add the following lines to final depthai pipeline setup to convert the model at run time (setting use_cashe=True  means the next time the model is run, the already compiled version is executed, so we don't need to re-compile upon every execution)
