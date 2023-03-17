@@ -28,12 +28,23 @@ def displayFrame(name, frame, detections):
     cv2.imshow(name, frame)
 
 
+"""
+# for stick insects
 nnPath = blobconverter.from_openvino(xml="stick_tiny_YOLO_v4/yolov4_tiny_sticks.xml",
                                      bin="stick_tiny_YOLO_v4/yolov4_tiny_sticks.bin",
                                      data_type="FP16",
                                      shaves=6,
                                      version="2021.3",
                                      use_cache=True)
+"""
+# for ants
+nnPath = blobconverter.from_openvino(xml="ant_tiny_YOLO_v4/yolov4_tiny_ants_416.xml",
+                                     bin="ant_tiny_YOLO_v4/yolov4_tiny_ants_416.bin",
+                                     data_type="FP16",
+                                     shaves=6,
+                                     version="2021.3",
+                                     use_cache=True)
+
 
 if not Path(nnPath).exists():
     import sys
